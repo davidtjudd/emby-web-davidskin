@@ -38,6 +38,10 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
 
             var tabs = [
                 {
+                    Name: Globalize.translate('Date Added'),
+                    Id: "dateadded"
+                },
+                {
                     Name: Globalize.translate('Movies'),
                     Id: "movies"
                 },
@@ -100,6 +104,9 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
 
                 switch (id) {
 
+                    case 'dateadded':
+                        renderNewMovies(page, pageParams, autoFocus, tabbedPage.bodyScroller, resolve);
+                        break;
                     case 'movies':
                         showAlphaPicker = true;
                         renderMovies(page, pageParams, autoFocus, tabbedPage.bodyScroller, resolve);
@@ -226,6 +233,46 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
         }
 
         function renderMovies(page, pageParams, autoFocus, scroller, resolve) {
+
+            self.listController = new horizontalList({
+                itemsContainer: page.querySelector('.contentScrollSlider'),
+                getItemsMethod: function (startIndex, limit) {
+                    return Emby.Models.items({
+                        StartIndex: startIndex,
+                        Limit: limit,
+                        ParentId: pageParams.parentid,
+                        IncludeItemTypes: "Movie",
+                        Recursive: true,
+                        SortBy: "SortName",
+                        Fields: "SortName"
+                    });
+                },
+                listCountElement: page.querySelector('.listCount'),
+                listNumbersElement: page.querySelector('.listNumbers'),
+                autoFocus: autoFocus,
+                selectedItemInfoElement: page.querySelector('.selectedItemInfo'),
+                selectedIndexElement: page.querySelector('.selectedIndex'),
+                scroller: scroller,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                },
+                cardOptions: {
+                    rows: {
+                        portrait: 2,
+                        square: 3,
+                        backdrop: 3
+                    },
+                    scalable: false
+                }
+            });
+
+            self.listController.render();
+        }
+
+        function renderNewMovies(page, pageParams, autoFocus, scroller, resolve) {
 
             self.listController = new horizontalList({
                 itemsContainer: page.querySelector('.contentScrollSlider'),
