@@ -1,10 +1,10 @@
 {
-    "name": "emby.defaultskin",
-    "displayName": "Default Skin",
+    "name": "emby.davidskin",
+    "displayName": "David's Skin",
     "version": "1.0.0",
-    "description": "The default Emby skin.",
+    "description": "The David Emby skin.",
     "plugin": "plugin.js",
-    "homepage": "https://github.com/MediaBrowser/emby-web-defaultskin",
+    "homepage": "https://github.com/davidtjudd/emby-web-defaultskin",
     "thumb": "",
     "backdrop": ""
 }
