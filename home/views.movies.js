@@ -31,7 +31,7 @@ define(['./spotlight', 'imageLoader', 'focusManager', 'cardBuilder', './../skini
         var options = {
 
             IncludeItemTypes: "Movie",
-            Limit: 112,
+            Limit: 12,
             ParentId: parentId,
             EnableImageTypes: "Primary,Backdrop,Thumb"
         };
