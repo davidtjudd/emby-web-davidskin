@@ -236,7 +236,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                         ParentId: pageParams.parentid,
                         IncludeItemTypes: "Movie",
                         Recursive: true,
-                        SortBy: "DateModified,SortName",
+                        SortBy: "DateCreated,SortName",
                         SortOrder: "Descending",
                         Fields: "SortName"
                     });
