@@ -237,6 +237,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                         IncludeItemTypes: "Movie",
                         Recursive: true,
                         SortBy: "DateCreated,SortName",
+                        SortOrder: "Descending",
                         Fields: "SortName"
                     });
                 },
