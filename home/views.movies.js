@@ -48,9 +48,11 @@ define(['./spotlight', 'imageLoader', 'focusManager', 'cardBuilder', './../skini
                 rows: 2,
                 scalable: false
             });
-            section.innerHTML += '<div class="listItemsMoreButtonContainer">';
-            section.innerHTML += '<button is="emby-button" class="listItemsMoreButton raised" data-parentid="' + options.parentId + '" data-indextype="Genres" data-indexvalue="' + 1 + '">' + 'More' + '</button>';
-            section.innerHTML += '</div>';
+            var html = '<div class="listItemsMoreButtonContainer">';
+            html += '<button is="emby-button" class="listItemsMoreButton raised" data-parentid="' + options.parentId + '" data-indextype="Genres" data-indexvalue="' + 1 + '">' + 'More' + '</button>';
+            html += '</div>';
+            section.insertAdjacentHTML('beforeend', html);
+            
         });
     }
 
