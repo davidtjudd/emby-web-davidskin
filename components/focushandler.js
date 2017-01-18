@@ -58,7 +58,6 @@ define(['imageLoader', 'itemHelper', 'backdrop', 'mediaInfo', 'focusManager', 's
 
             function onKeyDown(e) {
 
-                // Don't submit form on enter
                 if (e.keyCode === 34) {
                     e.preventDefault();
                     alert('page down');
