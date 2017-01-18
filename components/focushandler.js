@@ -56,6 +56,17 @@ define(['imageLoader', 'itemHelper', 'backdrop', 'mediaInfo', 'focusManager', 's
             var selectedIndexElement = options.selectedIndexElement;
             var selectedItemPanel;
 
+            function onKeyDown(e) {
+
+                // Don't submit form on enter
+                if (e.keyCode === 34) {
+                    e.preventDefault();
+                    alert('page down');
+
+                    return false;
+                }
+            }
+
             function onFocusIn(e) {
 
                 var focused = e.target;
