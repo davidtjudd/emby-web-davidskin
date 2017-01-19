@@ -33,7 +33,6 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
             if (e.keyCode === 34) {
                 e.preventDefault();
                 alert('page down');
-
                 return false;
             }
         }

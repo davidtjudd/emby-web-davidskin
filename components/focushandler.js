@@ -55,12 +55,13 @@ define(['imageLoader', 'itemHelper', 'backdrop', 'mediaInfo', 'focusManager', 's
             var selectedItemInfoElement = options.selectedItemInfoElement;
             var selectedIndexElement = options.selectedIndexElement;
             var selectedItemPanel;
+            parent.onKeyDown = function (e) { onKeyDown(e) };
 
             function onKeyDown(e) {
 
                 if (e.keyCode === 34) {
                     e.preventDefault();
-                    alert('page down');
+                    alert('page down again');
 
                     return false;
                 }
