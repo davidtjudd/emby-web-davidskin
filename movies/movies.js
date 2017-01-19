@@ -28,6 +28,16 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
             }
         });
 
+        function onKeyDown(e) {
+
+            if (e.keyCode === 34) {
+                e.preventDefault();
+                alert('page down');
+
+                return false;
+            }
+        }
+
         function renderTabs(view, initialTabId, pageInstance, params) {
 
             self.alphaPicker = new alphaPicker({
@@ -84,6 +94,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
         function loadViewContent(page, id, type) {
 
             var tabbedPage = this;
+            page.querySelector('.contentScrollSlider').onkeydown = function (e) { onKeyDown(e) };
 
             return new Promise(function (resolve, reject) {
 
