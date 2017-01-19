@@ -93,7 +93,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
         function loadViewContent(page, id, type) {
 
             var tabbedPage = this;
-            page.querySelector('.contentScrollSlider').onkeydown = function (e) { onKeyDown(e) };
+            //page.querySelector('.contentScrollSlider').onkeydown = function (e) { onKeyDown(e) };
 
             return new Promise(function (resolve, reject) {
 
