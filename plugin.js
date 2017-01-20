@@ -1,4 +1,4 @@
-define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'events', 'datetime', 'mouseManager'], function (playbackManager, pluginManager, browser, connectionManager, events, datetime, mouseManager) {
+define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'events', 'datetime', 'mouseManager', 'dom'], function (playbackManager, pluginManager, browser, connectionManager, events, datetime, mouseManager, dom) {
     'use strict';
 
     function updateClock() {
@@ -52,10 +52,12 @@ define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'eve
                 list.push('css!' + pluginManager.mapPath(self, 'css/fonts'));
             }
 
-            // The samsung and lg tv browsers don't quite support all of the flex techniques being used, so add a stylehsheet to degrade
-            if (browser.noFlex) {
-                console.log("** Using noflex css");
+            if (browser.noFlex || browser.operaTv) {
                 list.push('css!' + pluginManager.mapPath(self, 'css/noflex'));
+            }
+
+            if (browser.operaTv) {
+                list.push('css!' + pluginManager.mapPath(self, 'css/operatv'));
             }
 
             // Needed by the header
@@ -434,7 +436,7 @@ define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'eve
                 }) + '" />';
 
             } else {
-                headerUserButton.innerHTML = '<i class="md-icon">person</i>';
+                headerUserButton.innerHTML = '<i class="md-icon">&#xE7FD;</i>';
             }
 
             document.querySelector('.headerUserButton').classList.remove('hide');

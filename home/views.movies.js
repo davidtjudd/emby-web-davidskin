@@ -97,7 +97,7 @@ define(['./spotlight', 'imageLoader', 'focusManager', 'cardBuilder', './../skini
             var recs = element.querySelector('.recommendations');
 
             if (recs) {
-                recs.innerHTML = values.join('');
+                recs.innerHTML = '<div class="horizontalSectionsContainer">' + values.join('') + '</div>';
 
                 imageLoader.lazyChildren(recs);
             }

@@ -5,19 +5,15 @@
 
         <div class="itemPageButtons">
             <button is="emby-button" class="btnPlay block raised">
-                <i class="md-icon">&#xE037;</i>
                 <span class="btnPlayText">${Play}</span>
             </button>
             <button is="emby-button" class="btnQueue block raised">
-                <i class="md-icon">&#xE03C;</i>
                 <span>${Queue}</span>
             </button>
             <button is="emby-button" class="btnShuffle raised block hide">
-                <i class="md-icon">&#xE043;</i>
                 <span>${Shuffle}</span>
             </button>
             <button is="emby-button" class="btnInstantMix raised block hide">
-                <i class="md-icon">&#xE043;</i>
                 <span>${InstantMix}</span>
             </button>
 
@@ -65,10 +61,12 @@
                                 &nbsp;
                             </button>
                         </div>
+
+                        <button is="emby-button" type="button" class="btnDeleteItem fab mini hide" title="${DeleteMedia}"><i class="md-icon">&#xE872;</i></button>
+
                         <div class="itemPageUserDataIcons">
 
                         </div>
-                        <button is="emby-button" type="button" class="btnDeleteItem fab mini hide" title="${DeleteMedia}"><i class="md-icon">&#xE872;</i></button>
                     </div>
 
                     <div class="syncLocalContainer hide" style="margin: 1em 0;">
@@ -88,10 +86,10 @@
 
                     <p class="overview hide"></p>
 
-                    <div class="trackList" is="emby-itemscontainer">
+                    <div class="trackList vertical-list" is="emby-itemscontainer">
 
                     </div>
-                    <div class="episodes" is="emby-itemscontainer">
+                    <div class="episodes vertical-list" is="emby-itemscontainer">
 
                     </div>
 

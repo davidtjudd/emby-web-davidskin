@@ -1465,23 +1465,12 @@ define(['itemContextMenu', 'loading', './../skininfo', 'datetime', 'playbackMana
 
             function play() {
 
-                var button = this;
-                if (!button.tagName) {
-                    button = null;
-                }
+                var item = currentItem;
 
-                if (currentItem.IsFolder) {
-                    playbackManager.play({
-                        items: [currentItem]
-                    });
-                } else {
-                    require(['playMenu'], function (playMenu) {
-                        playMenu.show({
-                            item: currentItem,
-                            positionTo: button
-                        });
-                    });
-                }
+                playbackManager.play({
+                    items: [item],
+                    startPositionTicks: item.UserData ? item.UserData.PlaybackPositionTicks : 0
+                });
             }
 
             function deleteItem() {

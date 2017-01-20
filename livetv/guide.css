@@ -36,3 +36,14 @@
     width: 22vh;
     flex-shrink: 0;
 }
+
+.guideSelectedItemPrimaryInfo {
+    display: flex;
+    align-items: center;
+}
+
+.guideSelectedItemMediaInfo {
+    margin-top: .15em;
+    display: flex;
+    align-items: center;
+}

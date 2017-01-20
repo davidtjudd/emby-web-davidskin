@@ -77,7 +77,7 @@ define(['tvguide', 'events', 'datetime', 'imageLoader', 'backdrop', 'mediaInfo']
 
             var html = '';
 
-            html += '<div style="display:flex;align-items:center;">';
+            html += '<div class="guideSelectedItemPrimaryInfo">';
             html += '<h2>' + item.Name + '</h2>';
 
             if (item.IsHD) {
@@ -94,7 +94,7 @@ define(['tvguide', 'events', 'datetime', 'imageLoader', 'backdrop', 'mediaInfo']
 
             var secondaryMediaInfoHtml = mediaInfo.getPrimaryMediaInfoHtml(item);
             if (secondaryMediaInfoHtml) {
-                html += '<div class="dim" style="margin-top:.15em;display:flex;align-items:center;">';
+                html += '<div class="dim guideSelectedItemMediaInfo">';
                 html += secondaryMediaInfoHtml;
                 html += '</div>';
             }

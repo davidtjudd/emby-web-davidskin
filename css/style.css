@@ -22,7 +22,7 @@ h1 {
     display: inline-block;
     vertical-align: middle;
     margin: 0;
-    height: 5.6vh;
+    height: 1.7em;
     text-transform: capitalize;
 }
 
@@ -58,15 +58,13 @@ h1 {
 .skinHeader {
     /* This will ensure it is on top of the main body */
     z-index: 1;
-    /* padding-top: 3vh; */
-    /* padding-bottom: 2.4vh; */
     display: flex;
     align-items: center;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    height: 11vh;
+    height: 11%;
 }
 
 .headerLeft {
@@ -114,15 +112,6 @@ h1 {
     .pageContainer.flex {
         padding-top: 11vh;
         overflow: hidden;
-        display: -webkit-flex;
-        display: flex;
-        contain: strict;
-    }
-
-    .pageContainer.flex {
-        padding-top: 11vh;
-        overflow: hidden;
-        display: -webkit-flex;
         display: flex;
         contain: strict;
     }
@@ -162,12 +151,12 @@ h1 {
 }
 
     .itemScrollFrame.scrollFrameX .scrollSlider {
-        padding-bottom: 3vh;
-        padding-top: 3vh;
+        padding-bottom: 1.2em;
+        padding-top: 1.2em;
     }
 
     .itemScrollFrame.scrollFrameX.noTopPadding .scrollSlider {
-        padding-top: 2.74vh;
+        padding-top: 1.1em;
     }
 
 .itemScrollFrame.scrollFrameY {
@@ -180,6 +169,10 @@ h1 {
     padding: 0 2%;
     /* Needed for native scroll */
     flex-grow: 1;
+}
+
+.horizontalSectionsContainer {
+    display: flex;
 }
 
 .horizontalPageContent h1 {
@@ -195,8 +188,8 @@ h1 {
 }
 
 ::-webkit-scrollbar {
-    width: 1vh;
-    height: 1vh;
+    width: .5em;
+    height: .5em;
 }
 
 ::-webkit-scrollbar-button:start:decrement,
@@ -217,10 +210,6 @@ h1 {
     display: inline-block;
     vertical-align: top;
 }
-
-    .cardColumn .card:not(.hide) {
-        display: block !important;
-    }
 
 .userViewNames h3 {
     margin-top: 0;
@@ -247,21 +236,14 @@ h1 {
     }
 
 .horizontalSection {
-    display: inline-block;
-    vertical-align: top;
     margin-right: 1.25em;
+    flex-shrink: 0;
 }
 
     .horizontalSection .sectionTitle {
         font-size: 90%;
         padding-left: .1em;
     }
-
-i.mediaInfoItem {
-    width: 4vh;
-    height: 4vh;
-    margin-right: .6em;
-}
 
 .listItemMediaInfo {
     color: #bbb !important;
@@ -295,16 +277,6 @@ i.mediaInfoItem {
     position: relative;
 }
 
-    .selectedItemMediaInfo i {
-        width: 2.96vh;
-        height: 2.96vh;
-    }
-
-    .selectedItemMediaInfo .starRatingContainer i {
-        width: 2.96vh;
-        height: 2.96vh;
-    }
-
 .selectedItemInfoLogo {
     width: 16%;
     background-repeat: no-repeat;
@@ -319,12 +291,12 @@ i.mediaInfoItem {
     flex-grow: 1;
 }
 
-.selectedItemInfoDetails > div {
-    white-space: nowrap;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+    .selectedItemInfoDetails > div {
+        white-space: nowrap;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
 /* Need to use :not due to conflict with loginSquareCard */
 .horizontalPageContent .squareCard:not(.scalableCard) .cardImageContainer {
@@ -418,10 +390,6 @@ i.mediaInfoItem {
     .loginSquareCard {
         width: 18vw;
     }
-}
-
-.itemProgressBar {
-    height: .56vh;
 }
 
 .playlistPageContainer {

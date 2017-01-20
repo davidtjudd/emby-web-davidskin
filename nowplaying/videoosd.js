@@ -1,4 +1,4 @@
-define(['playbackManager', 'dom', 'inputmanager', 'datetime', 'itemHelper', 'mediaInfo', 'focusManager', 'imageLoader', 'scrollHelper', 'events', 'connectionManager', 'browser', 'globalize', 'apphost', 'scrollStyles', 'emby-slider'], function (playbackManager, dom, inputManager, datetime, itemHelper, mediaInfo, focusManager, imageLoader, scrollHelper, events, connectionManager, browser, globalize, appHost) {
+define(['playbackManager', 'dom', 'inputmanager', 'datetime', 'itemHelper', 'mediaInfo', 'focusManager', 'imageLoader', 'scrollHelper', 'events', 'connectionManager', 'browser', 'globalize', 'apphost', 'layoutManager', 'scrollStyles', 'emby-slider'], function (playbackManager, dom, inputManager, datetime, itemHelper, mediaInfo, focusManager, imageLoader, scrollHelper, events, connectionManager, browser, globalize, appHost, layoutManager) {
     'use strict';
 
     function seriesImageUrl(item, options) {
@@ -425,7 +425,7 @@ define(['playbackManager', 'dom', 'inputmanager', 'datetime', 'itemHelper', 'med
             releaseCurrentPlayer();
         });
 
-        if (appHost.supports('remotecontrol')) {
+        if (appHost.supports('remotecontrol') && !layoutManager.tv) {
             view.querySelector('.btnCast').classList.remove('hide');
         }
 
@@ -470,7 +470,7 @@ define(['playbackManager', 'dom', 'inputmanager', 'datetime', 'itemHelper', 'med
             isEnabled = true;
 
             updatePlayerStateInternal(event, state);
-            updatePlaylist();
+            updatePlaylist(player);
 
             enableStopOnBack(true);
         }
@@ -732,31 +732,16 @@ define(['playbackManager', 'dom', 'inputmanager', 'datetime', 'itemHelper', 'med
             }
         }
 
-        function updatePlaylist() {
-
-            var items = playbackManager.playlist();
-
-            var index = playbackManager.currentPlaylistIndex();
-
-            var previousEnabled = index > 0;
-            var nextEnabled = (index < items.length - 1);
+        function updatePlaylist(player) {
 
             var btnPreviousTrack = view.querySelector('.btnPreviousTrack');
             var btnNextTrack = view.querySelector('.btnNextTrack');
 
-            if (!nextEnabled && !previousEnabled) {
+            btnPreviousTrack.classList.remove('hide');
+            btnNextTrack.classList.remove('hide');
 
-                btnPreviousTrack.classList.add('hide');
-                btnNextTrack.classList.add('hide');
-
-            } else {
-
-                btnPreviousTrack.classList.remove('hide');
-                btnNextTrack.classList.remove('hide');
-
-                btnNextTrack.disabled = !nextEnabled;
-                btnPreviousTrack.disabled = !previousEnabled;
-            }
+            btnNextTrack.disabled = false;
+            btnPreviousTrack.disabled = false;
         }
 
         function updateTimeText(elem, ticks, divider) {

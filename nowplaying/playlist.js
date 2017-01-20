@@ -70,19 +70,19 @@ define(['playbackManager', 'scroller', 'loading', 'imageLoader', 'backdrop', 'li
 
             var section = view.querySelector('.trackList');
 
-            var items = playbackManager.playlist();
+            playbackManager.getPlaylist().then(function(items) {
+                section.innerHTML = listview.getListViewHtml({
+                    items: items,
+                    action: 'setplaylistindex',
+                    showParentTitle: true,
+                    enableSideMediaInfo: true
+                });
 
-            section.innerHTML = listview.getListViewHtml({
-                items: items,
-                action: 'setplaylistindex',
-                showParentTitle: true,
-                enableSideMediaInfo: true
+                imageLoader.lazyChildren(section);
+
+                focusManager.autoFocus(section);
+                updateCurrentPlaylistItem();
             });
-
-            imageLoader.lazyChildren(section);
-
-            focusManager.autoFocus(section);
-            updateCurrentPlaylistItem();
         }
 
         function updateCurrentPlaylistItem() {
