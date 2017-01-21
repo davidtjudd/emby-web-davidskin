@@ -75,16 +75,20 @@ define(['imageLoader', 'itemHelper', 'backdrop', 'mediaInfo', 'focusManager', 's
                             if (index < 0)
                                 index = 0;
                             var contentScrollSlider = page.querySelector('.contentScrollSlider');
+                            if (index > (contentScrollSlider.childElementCount*2)-2)
+                                index = (contentScrollSlider.childElementCount*2)-2;
                             var newFocus = contentScrollSlider.querySelector('.card[data-index^=\'' + index + '\']');
-                            newFocus.focus();
-                            focusedElement = newFocus;
-                            if (options.scroller) {
-                                var now = new Date().getTime();
-                                var animate = (now - lastFocus) > 50;
-                                options.scroller.toCenter(newFocus, !animate);
-                                lastFocus = now;
-                            } else if (options.scrollElement) {
-                                scrollHelper.toCenter(options.scrollElement, focused, options.horizontal);
+                            if (newFocus != null) {
+                                newFocus.focus();
+                                focusedElement = newFocus;
+                                if (options.scroller) {
+                                    var now = new Date().getTime();
+                                    var animate = (now - lastFocus) > 50;
+                                    options.scroller.toCenter(newFocus, !animate);
+                                    lastFocus = now;
+                                } else if (options.scrollElement) {
+                                    scrollHelper.toCenter(options.scrollElement, focused, options.horizontal);
+                                }
                             }
                         };
                     };

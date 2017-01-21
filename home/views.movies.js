@@ -52,7 +52,9 @@ define(['./spotlight', 'imageLoader', 'focusManager', 'cardBuilder', './../skini
             html += '<button is="emby-button" class="listItemsMoreButton raised" data-parentid="' + options.parentId + '" data-indextype="Genres" data-indexvalue="' + 1 + '">' + 'More' + '</button>';
             html += '</div>';
             section.insertAdjacentHTML('beforeend', html);
-            
+            element.querySelector('.listItemsMoreButtonContainer').addEventListener('click', function () {
+                Emby.Page.show(Emby.PluginManager.mapRoute(skinInfo.id, 'movies/movies.html?tab=dateadded&parentid=' + parentId));
+            });
         });
     }
 

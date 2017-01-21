@@ -28,15 +28,6 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
             }
         });
 
-        function onKeyDown(e) {
-
-            if (e.keyCode === 34) {
-                e.preventDefault();
-                alert('page down');
-                return false;
-            }
-        }
-
         function renderTabs(view, initialTabId, pageInstance, params) {
 
             self.alphaPicker = new alphaPicker({
@@ -93,7 +84,6 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
         function loadViewContent(page, id, type) {
 
             var tabbedPage = this;
-            //page.querySelector('.contentScrollSlider').onkeydown = function (e) { onKeyDown(e) };
 
             return new Promise(function (resolve, reject) {
 
@@ -110,7 +100,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                     tabbedPage.hasLoaded = true;
                 }
 
-                var showAlphaPicker = false;
+                showAlphaPicker(false);
 
                 switch (id) {
 
@@ -118,11 +108,9 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                         renderNewMovies(page, pageParams, autoFocus, tabbedPage.bodyScroller, resolve);
                         break;
                     case 'movies':
-                        showAlphaPicker = true;
                         renderMovies(page, pageParams, autoFocus, tabbedPage.bodyScroller, resolve);
                         break;
                     case 'unwatched':
-                        showAlphaPicker = true;
                         renderUnwatchedMovies(page, pageParams, autoFocus, tabbedPage.bodyScroller, resolve);
                         break;
                     case 'years':
@@ -144,10 +132,6 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                         break;
                 }
 
-                if (self.alphaPicker) {
-                    self.alphaPicker.visible(showAlphaPicker);
-                    self.alphaPicker.enabled(showAlphaPicker);
-                }
             });
         }
 
@@ -268,6 +252,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                         resolve();
                         resolve = null;
                     }
+                    showAlphaPicker(true);
                 },
                 cardOptions: {
                     rows: {
@@ -280,6 +265,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
             });
 
             self.listController.render();
+            
         }
 
         function renderNewMovies(page, pageParams, autoFocus, scroller, resolve) {
@@ -351,6 +337,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                         resolve();
                         resolve = null;
                     }
+                    showAlphaPicker(true);
                 },
                 cardOptions: {
                     rows: {
@@ -482,6 +469,12 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
 
             self.listController.render();
         }
-    };
 
+        function showAlphaPicker(show) {
+            if (self.alphaPicker) {
+                self.alphaPicker.visible(show);
+                self.alphaPicker.enabled(show);
+            };
+        };
+    };
 });
