@@ -286,6 +286,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
 
             self.listController = new horizontalList({
                 itemsContainer: page.querySelector('.contentScrollSlider'),
+                Page: page,
                 getItemsMethod: function (startIndex, limit) {
                     return Emby.Models.items({
                         StartIndex: startIndex,

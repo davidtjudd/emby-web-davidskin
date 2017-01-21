@@ -20,7 +20,8 @@ define(['loading', './focushandler', 'focusManager', 'cardBuilder'], function (l
                 selectedIndexElement: options.selectedIndexElement,
                 scroller: options.scroller,
                 selectedItemMode: options.selectedItemMode,
-                enableBackdrops: true
+                enableBackdrops: true,
+                page: options.Page
             });
         }
 

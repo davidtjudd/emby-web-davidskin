@@ -40,6 +40,7 @@ define(['imageLoader', 'itemHelper', 'backdrop', 'mediaInfo', 'focusManager', 's
             var isHorizontal = options.scroller ? options.scroller.options.horizontal : options.horizontal;
             var zoomScale = options.zoomScale || (isHorizontal ? '1.16' : '1.12');
             var lastFocus = 0;
+            var page = options.page;
 
             if (layoutManager.tv) {
                 dom.addEventListener(parent, 'focus', onFocusIn, {
@@ -55,13 +56,38 @@ define(['imageLoader', 'itemHelper', 'backdrop', 'mediaInfo', 'focusManager', 's
             var selectedItemInfoElement = options.selectedItemInfoElement;
             var selectedIndexElement = options.selectedIndexElement;
             var selectedItemPanel;
-            parent.onKeyDown = function (e) { onKeyDown(e) };
+            if (page != null)
+                page.querySelector('.contentScrollSlider').onkeydown = function (e) { onKeyDown(e) };
 
             function onKeyDown(e) {
 
-                if (e.keyCode === 34) {
+                if (e.keyCode === 34 || e.keyCode === 33) {
                     e.preventDefault();
-                    alert('page down again');
+                    var jump = -10;
+                    if (e.keyCode === 34)
+                        jump = 10;
+                    if (focusedElement) {
+
+                        if (selectedIndexElement) {
+                            var index = parseInt(focusedElement.getAttribute('data-index')) + jump;
+                            if (Math.abs(index % 2) == 1)
+                                index = index + 1;
+                            if (index < 0)
+                                index = 0;
+                            var contentScrollSlider = page.querySelector('.contentScrollSlider');
+                            var newFocus = contentScrollSlider.querySelector('.card[data-index^=\'' + index + '\']');
+                            newFocus.focus();
+                            focusedElement = newFocus;
+                            if (options.scroller) {
+                                var now = new Date().getTime();
+                                var animate = (now - lastFocus) > 50;
+                                options.scroller.toCenter(newFocus, !animate);
+                                lastFocus = now;
+                            } else if (options.scrollElement) {
+                                scrollHelper.toCenter(options.scrollElement, focused, options.horizontal);
+                            }
+                        };
+                    };
 
                     return false;
                 }
