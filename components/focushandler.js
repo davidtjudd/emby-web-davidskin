@@ -1,5 +1,5 @@
-define(['imageLoader', 'itemHelper', 'backdrop', 'mediaInfo', 'focusManager', 'scrollHelper', 'browser', 'layoutManager', 'dom'],
-    function (imageLoader, itemHelper, backdrop, mediaInfo, focusManager, scrollHelper, browser, layoutManager, dom) {
+define(['imageLoader', 'itemHelper', 'backdrop', 'mediaInfo', 'focusManager', 'scrollHelper', 'browser', 'layoutManager', 'dom', 'inputManager'],
+    function (imageLoader, itemHelper, backdrop, mediaInfo, focusManager, scrollHelper, browser, layoutManager, dom, inputManager) {
         'use strict';
 
         var enableAnimations = browser.animate || browser.edge;
@@ -58,6 +58,18 @@ define(['imageLoader', 'itemHelper', 'backdrop', 'mediaInfo', 'focusManager', 's
             var selectedItemPanel;
             if (page != null)
                 page.querySelector('.contentScrollSlider').onkeydown = function (e) { onKeyDown(e) };
+
+
+            function onInputCommand(e) {
+
+                switch (e.detail.command) {
+                    case 'channeldown':
+                        alert("down");
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             function onKeyDown(e) {
 
