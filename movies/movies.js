@@ -1,12 +1,25 @@
-define(['loading', 'alphaPicker', './../components/horizontallist', './../components/tabbedpage', 'backdrop', 'emby-itemscontainer'], function (loading, alphaPicker, horizontalList, tabbedPage, backdrop) {
+define(['loading', 'alphaPicker', './../components/horizontallist', './../components/tabbedpage', 'backdrop', 'emby-itemscontainer', 'inputmanager'], function (loading, alphaPicker, horizontalList, tabbedPage, backdrop, inputmanager) {
     'use strict';
 
     return function (view, params) {
 
         var self = this;
 
-        view.addEventListener('viewshow', function (e) {
+        
+        function onInputCommand(e) {
 
+            switch (e.detail.command) {
+                case 'channeldown':
+                    alert("down");
+                    break;
+                default:
+                    break;
+            }
+        }
+        //inputmanager.on(window, onInputCommand);
+
+        view.addEventListener('viewshow', function (e) {
+            //inputmanager.on(window, onInputCommand);
             if (!self.tabbedPage) {
                 loading.show();
                 renderTabs(view, params.tab, self, params);

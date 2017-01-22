@@ -49,7 +49,7 @@ define(['./spotlight', 'imageLoader', 'focusManager', 'cardBuilder', './../skini
                 scalable: false
             });
             var html = '<div class="listItemsMoreButtonContainer">';
-            html += '<button is="emby-button" class="listItemsMoreButton raised" data-parentid="' + options.parentId + '" data-indextype="Genres" data-indexvalue="' + 1 + '">' + 'More' + '</button>';
+            html += '<button is="emby-button" class="listItemsMoreButton raised" data-parentid="' + options.parentId + '" data-indextype="Genres" data-indexvalue="' + 1 + '">' +  Globalize.translate('More') + '</button>';
             html += '</div>';
             section.insertAdjacentHTML('beforeend', html);
             element.querySelector('.listItemsMoreButtonContainer').addEventListener('click', function () {
