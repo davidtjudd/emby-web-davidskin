@@ -2,7 +2,7 @@
     "name": "emby.davidskin",
     "displayName": "David's Skin",
     "version": "1.0.0",
-    "description": "The David Emby skin.",
+    "description": "David's Emby skin.",
     "plugin": "plugin.js",
     "homepage": "https://github.com/davidtjudd/emby-web-defaultskin",
     "thumb": "",
