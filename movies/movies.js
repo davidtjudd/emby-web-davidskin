@@ -145,6 +145,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
 
                 self.listController = new horizontalList({
                     itemsContainer: page.querySelector('.contentScrollSlider'),
+                    Page: page,
                     getItemsMethod: function (startIndex, limit) {
                         return Emby.Models.items({
                             StartIndex: startIndex,
@@ -190,6 +191,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
 
             self.listController = new horizontalList({
                 itemsContainer: page.querySelector('.contentScrollSlider'),
+                Page: page,
                 getItemsMethod: function (startIndex, limit) {
                     return Emby.Models.items({
                         StartIndex: startIndex,
@@ -230,6 +232,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
 
             self.listController = new horizontalList({
                 itemsContainer: page.querySelector('.contentScrollSlider'),
+                Page: page,
                 getItemsMethod: function (startIndex, limit) {
                     return Emby.Models.items({
                         StartIndex: startIndex,
@@ -298,6 +301,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                     }
                 },
                 cardOptions: {
+                    //indexBy: 'DateCreated',
                     rows: {
                         portrait: 2,
                         square: 3,
@@ -314,6 +318,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
 
             self.listController = new horizontalList({
                 itemsContainer: page.querySelector('.contentScrollSlider'),
+                Page: page,
                 getItemsMethod: function (startIndex, limit) {
                     return Emby.Models.items({
                         StartIndex: startIndex,
@@ -356,6 +361,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
 
             self.listController = new horizontalList({
                 itemsContainer: page.querySelector('.contentScrollSlider'),
+                Page: page,
                 getItemsMethod: function (startIndex, limit) {
                     return Emby.Models.collections({
                         StartIndex: startIndex,
@@ -392,6 +398,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
 
             self.listController = new horizontalList({
                 itemsContainer: page.querySelector('.contentScrollSlider'),
+                Page: page,
                 getItemsMethod: function (startIndex, limit) {
                     return Emby.Models.items({
                         StartIndex: startIndex,
@@ -433,6 +440,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
 
             self.listController = new horizontalList({
                 itemsContainer: page.querySelector('.contentScrollSlider'),
+                Page: page,
                 getItemsMethod: function (startIndex, limit) {
                     return Emby.Models.items({
                         StartIndex: startIndex,
