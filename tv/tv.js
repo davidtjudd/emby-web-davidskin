@@ -42,6 +42,10 @@ define(['connectionManager', 'loading', './../skininfo', 'alphaPicker', './../co
             });
 
             var tabs = [
+                //{
+                //    Name: Globalize.translate('Date Added'),
+                //    Id: "dateadded"
+                //},
                 {
                     Name: Globalize.translate('Series'),
                     Id: "series"
@@ -97,6 +101,11 @@ define(['connectionManager', 'loading', './../skininfo', 'alphaPicker', './../co
 
                 switch (id) {
 
+                    case 'dateadded':
+                        //showAlphaPicker = true;
+                        showListNumbers = true;
+                        renderNewSeries(page, pageParams, autoFocus, tabbedPage.bodyScroller, resolve);
+                        break;
                     case 'series':
                         showAlphaPicker = true;
                         showListNumbers = true;
@@ -158,6 +167,55 @@ define(['connectionManager', 'loading', './../skininfo', 'alphaPicker', './../co
                         resolve();
                         resolve = null;
                     }
+                }
+            });
+
+            self.listController.render();
+        }
+
+        function renderNewSeries(page, pageParams, autoFocus, scroller, resolve) {
+
+            self.listController = new horizontalList({
+                itemsContainer: page.querySelector('.contentScrollSlider'),
+                getItemsMethod: function (startIndex, limit) {
+                    var options = {
+
+                        IncludeItemTypes: "Episode",
+                        Limit: 500,
+                        Fields: "PrimaryImageAspectRatio",
+                        ImageTypeLimit: 1,
+                        EnableImageTypes: "Primary,Backdrop,Thumb"
+                    };
+                    return Emby.Models.latestItems(options, {
+                        //StartIndex: startIndex,
+                        //Limit: limit,
+                        //ParentId: pageParams.parentid,
+                        //IncludeItemTypes: "Series",
+                        //Recursive: true,
+                        //SortBy: "DateCreated,SortName",
+                        //SortOrder: "Descending",
+                        //ImageTypeLimit: 1,
+                        //Fields: "PrimaryImageAspectRatio,SortName"
+                    });
+                },
+                listCountElement: page.querySelector('.listCount'),
+                listNumbersElement: page.querySelector('.listNumbers'),
+                autoFocus: autoFocus,
+                selectedItemInfoElement: page.querySelector('.selectedItemInfo'),
+                selectedIndexElement: page.querySelector('.selectedIndex'),
+                scroller: scroller,
+                onRender: function () {
+                    if (resolve) {
+                        resolve();
+                        resolve = null;
+                    }
+                },
+                cardOptions: {
+                    shape: 'backdrop',
+                    rows: 3,
+                    preferThumb: true,
+                    showGroupCount: true,
+                    scalable: false
                 }
             });
 
