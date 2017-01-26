@@ -87,7 +87,7 @@ define(['playbackManager', 'scroller', 'loading', 'imageLoader', 'backdrop', 'li
 
         function updateCurrentPlaylistItem() {
 
-            var index = playbackManager.currentPlaylistIndex();
+            var index = playbackManager.getCurrentPlaylistIndex();
 
             var current = view.querySelector('.playlistIndexIndicatorImage');
             if (current) {

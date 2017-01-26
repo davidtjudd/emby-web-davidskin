@@ -1307,9 +1307,12 @@ define(['itemContextMenu', 'loading', './../skininfo', 'datetime', 'playbackMana
                 }
             }
 
-            function reloadItem(reloadAllData) {
+            function reloadItem(reloadAllData, restartDataLoad) {
 
                 if (reloadAllData) {
+                    if (restartDataLoad !== false) {
+                        startDataLoad();
+                    }
                     loading.show();
                 }
 
@@ -1401,7 +1404,7 @@ define(['itemContextMenu', 'loading', './../skininfo', 'datetime', 'playbackMana
 
                 var isRestored = e.detail.isRestored;
 
-                reloadItem(!isRestored);
+                reloadItem(!isRestored, false);
 
                 if (!isRestored) {
 
@@ -1493,7 +1496,6 @@ define(['itemContextMenu', 'loading', './../skininfo', 'datetime', 'playbackMana
                         Emby.Page.goHome();
 
                     } else if (result.updated) {
-                        startDataLoad();
                         reloadItem(true);
                     }
                 });
