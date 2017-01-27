@@ -1,31 +1,95 @@
-define(['loading', 'alphaPicker', './../components/horizontallist', './../components/tabbedpage', 'backdrop', 'emby-itemscontainer', 'inputmanager'], function (loading, alphaPicker, horizontalList, tabbedPage, backdrop, inputmanager) {
+define(['loading', 'alphaPicker', './../components/horizontallist', './../components/tabbedpage', 'backdrop', 'inputManager', 'focusManager', 'emby-itemscontainer'], function (loading, alphaPicker, horizontalList, tabbedPage, backdrop, inputManager, focusManager) {
     'use strict';
 
     return function (view, params) {
 
         var self = this;
 
-        
+        window.focusManager = focusManager;
+
+        function pageList(isDown, focusedElement, focusMan) {
+            var sliderObj = document.querySelector('.contentScrollSlider');
+            var sliderScrollWidth = sliderObj.clientWidth;
+            //get the col
+            var focusedParent = focusedElement.parentNode;
+            var focusedTopParent = focusedParent.parentNode;
+            if (focusedTopParent.classList.contains("horizontalSection"))
+                focusedParent = focusedTopParent;
+            //get the current cols index in the slider
+            var colIdx = Array.prototype.indexOf.call(focusedParent.parentNode.childNodes, focusedParent);
+            var colWidth = focusedParent.clientWidth;
+            //get the number it should move
+            var moveCount = Math.ceil((sliderScrollWidth - colWidth) / 2 / colWidth);
+            var jump = -Math.abs(moveCount);
+            if (isDown === true)
+                jump = Math.abs(moveCount);
+            jump = jump + colIdx;
+            if (jump < 0)
+                jump = 0;
+            //var newSelectedParent=focusedParent.parentNode.childNodes[jump+colIdx];
+
+            var newSelectedParent = sliderObj.childNodes[jump];
+            if (jump >= sliderObj.childNodes.length)
+                newSelectedParent = sliderObj.lastChild;
+            var newFocus = newSelectedParent.childNodes[0];
+            if (newFocus != null) {
+                if (newFocus.classList.contains("sectionTitle"))
+                    newFocus = newSelectedParent.childNodes[1].childNodes[0];//for grouped items
+                newFocus.focus();
+                focusedElement = newFocus;
+                //if (options.scroller) {
+                //    var now = new Date().getTime();
+                //    var animate = (now - lastFocus) > 50;
+                //    options.scroller.toCenter(newFocus, !animate);
+                //    lastFocus = now;
+                //}
+            };
+
+            return false;
+        };
+
         function onInputCommand(e) {
 
             switch (e.detail.command) {
                 case 'channeldown':
-                    alert("down");
+                    e.preventDefault();
+                    pageList(true, e.target, window.focusManager);
+                    break;
+                case 'channelup':
+                    e.preventDefault();
+                    pageList(false, e.target, window.focusManager);
+                    break;
+                case 'pagedown':
+                    e.preventDefault();
+                    pageList(true, e.target, window.focusManager);
+                    break;
+                case 'pageup':
+                    e.preventDefault();
+                    pageList(false, e.target, window.focusManager);
                     break;
                 default:
                     break;
             }
         }
-        //inputmanager.on(window, onInputCommand);
 
         view.addEventListener('viewshow', function (e) {
-            //inputmanager.on(window, onInputCommand);
+            var slider = document.querySelector('.contentScrollSlider');
+            inputManager.on(slider, onInputCommand);
+            //from ods
+            //dom.addEventListener(window, 'keydown', onWindowKeyDown, {
+            //    passive: true
+            //});
             if (!self.tabbedPage) {
                 loading.show();
                 renderTabs(view, params.tab, self, params);
             }
 
             Emby.Page.setTitle('');
+        });
+
+        view.addEventListener('viewbeforehide', function () {
+            var slider = document.querySelector('.contentScrollSlider');
+            inputManager.off(slider, onInputCommand);
         });
 
         view.addEventListener('viewdestroy', function () {
@@ -198,6 +262,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
 
                 self.listController.render();
             });
+            window.activeListView = self.listController;
         }
 
         function renderFavorites(page, pageParams, autoFocus, scroller, resolve) {

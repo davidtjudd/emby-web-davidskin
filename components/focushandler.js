@@ -56,110 +56,61 @@ define(['imageLoader', 'itemHelper', 'backdrop', 'mediaInfo', 'focusManager', 's
             var selectedItemInfoElement = options.selectedItemInfoElement;
             var selectedIndexElement = options.selectedIndexElement;
             var selectedItemPanel;
-            if (page != null)
-                page.querySelector('.contentScrollSlider').onkeydown = function (e) { onKeyDown(e) };
+            //if (page != null)
+            //    page.querySelector('.contentScrollSlider').onkeydown = function (e) { onKeyDown(e) };
 
-            function onKeyDown(e) {
+            //function onKeyDown(e) {
+            //    return;
+            //    if (e.keyCode === 34 || e.keyCode === 33) {
+            //        e.preventDefault();
 
-                if (e.keyCode === 34 || e.keyCode === 33) {
-                    e.preventDefault();
+            //        /////
+            //        //need to:
+            //        //get the round((width of the slider-the current item's width)/2)/the width of an item
+            //        //this will tell you how many to scroll by
+            //        //then get the current col and move x items
+            //        //what a pita
 
-                    /////
-                    //need to:
-                    //get the round((width of the slider-the current item's width)/2)/the width of an item
-                    //this will tell you how many to scroll by
-                    //then get the current col and move x items
-                    //what a pita
-
-                    var sliderObj = page.querySelector('.contentScrollSlider');
-                    var sliderScrollWidth = sliderObj.clientWidth;
-                    //get the col
-                    var focusedParent = focusedElement.parentNode;
-                    var focusedTopParent = focusedParent.parentNode;
-                    if (focusedTopParent.classList.contains("horizontalSection"))
-                        focusedParent = focusedTopParent;
-                    //get the current cols index in the slider
-                    var colIdx = Array.prototype.indexOf.call(focusedParent.parentNode.childNodes, focusedParent);
-                    var colWidth = focusedParent.clientWidth;
-                    //get the number it should move
-                    var moveCount = Math.ceil((sliderScrollWidth - colWidth) / 2 / colWidth);
-                    var jump = -Math.abs(moveCount);
-                    if (e.keyCode === 34)
-                        jump = Math.abs(moveCount);
-                    jump = jump + colIdx;
-                    if (jump < 0)
-                        jump = 0;
-                    //var newSelectedParent=focusedParent.parentNode.childNodes[jump+colIdx];
+            //        var sliderObj = page.querySelector('.contentScrollSlider');
+            //        var sliderScrollWidth = sliderObj.clientWidth;
+            //        //get the col
+            //        var focusedParent = focusedElement.parentNode;
+            //        var focusedTopParent = focusedParent.parentNode;
+            //        if (focusedTopParent.classList.contains("horizontalSection"))
+            //            focusedParent = focusedTopParent;
+            //        //get the current cols index in the slider
+            //        var colIdx = Array.prototype.indexOf.call(focusedParent.parentNode.childNodes, focusedParent);
+            //        var colWidth = focusedParent.clientWidth;
+            //        //get the number it should move
+            //        var moveCount = Math.ceil((sliderScrollWidth - colWidth) / 2 / colWidth);
+            //        var jump = -Math.abs(moveCount);
+            //        if (e.keyCode === 34)
+            //            jump = Math.abs(moveCount);
+            //        jump = jump + colIdx;
+            //        if (jump < 0)
+            //            jump = 0;
+            //        //var newSelectedParent=focusedParent.parentNode.childNodes[jump+colIdx];
                     
-                    var newSelectedParent = sliderObj.childNodes[jump];
-                    if (jump >= sliderObj.childNodes.length)
-                        newSelectedParent = sliderObj.lastChild;
-                    var newFocus = newSelectedParent.childNodes[0];
-                    if (newFocus != null) {
-                        if (newFocus.classList.contains("sectionTitle"))
-                            newFocus = newSelectedParent.childNodes[1].childNodes[0];//for grouped items
-                        newFocus.focus();
-                        focusedElement = newFocus;
-                        if (options.scroller) {
-                            var now = new Date().getTime();
-                            var animate = (now - lastFocus) > 50;
-                            options.scroller.toCenter(newFocus, !animate);
-                            lastFocus = now;
-                        }
-                    };
-                    /////
+            //        var newSelectedParent = sliderObj.childNodes[jump];
+            //        if (jump >= sliderObj.childNodes.length)
+            //            newSelectedParent = sliderObj.lastChild;
+            //        var newFocus = newSelectedParent.childNodes[0];
+            //        if (newFocus != null) {
+            //            if (newFocus.classList.contains("sectionTitle"))
+            //                newFocus = newSelectedParent.childNodes[1].childNodes[0];//for grouped items
+            //            newFocus.focus();
+            //            focusedElement = newFocus;
+            //            if (options.scroller) {
+            //                var now = new Date().getTime();
+            //                var animate = (now - lastFocus) > 50;
+            //                options.scroller.toCenter(newFocus, !animate);
+            //                lastFocus = now;
+            //            }
+            //        };
 
-
-
-
-
-                    //var jump = -Math.abs(moveCount);
-                    //if (e.keyCode === 34)
-                    //    jump = Math.abs(moveCount);
-                    //if (focusedElement) {
-                    //    var index = parseInt(focusedElement.getAttribute('data-index')) + jump;
-                    //    if (index < 0)
-                    //        index = 0;
-                    //    var newFocus = contentScrollSlider.querySelector('.card[data-index^=\'' + index + '\']');
-                    //    if (newFocus != null) {
-                    //        newFocus.focus();
-                    //        focusedElement = newFocus;
-                    //    if (options.scroller) {
-                    //        var now = new Date().getTime();
-                    //        var animate = (now - lastFocus) > 50;
-                    //        options.scroller.toCenter(newFocus, !animate);
-                    //        lastFocus = now;
-                    //    }
-
-                    //    //if (selectedIndexElement) {
-                    //    //    var index = parseInt(focusedElement.getAttribute('data-index')) + jump;
-                    //    //    if (Math.abs(index % 2) == 1)
-                    //    //        index = index + 1;
-                    //    //    if (index < 0)
-                    //    //        index = 0;
-                    //    //    var contentScrollSlider = page.querySelector('.contentScrollSlider');
-                    //    //    var rect = contentScrollSlider.clientWidth;
-                    //    //    if (index > (contentScrollSlider.childElementCount*2)-2)
-                    //    //        index = (contentScrollSlider.childElementCount*2)-2;
-                    //    //    var newFocus = contentScrollSlider.querySelector('.card[data-index^=\'' + index + '\']');
-                    //    //    if (newFocus != null) {
-                    //    //        newFocus.focus();
-                    //    //        focusedElement = newFocus;
-                    //    //        if (options.scroller) {
-                    //    //            var now = new Date().getTime();
-                    //    //            var animate = (now - lastFocus) > 50;
-                    //    //            options.scroller.toCenter(newFocus, !animate);
-                    //    //            lastFocus = now;
-                    //    //        } else if (options.scrollElement) {
-                    //    //            scrollHelper.toCenter(options.scrollElement, focused, options.horizontal);
-                    //    //        }
-                    //    //    }
-                    //    //};
-                    //};
-
-                    return false;
-                }
-            }
+            //        return false;
+            //    }
+            //}
 
             function onFocusIn(e) {
 
