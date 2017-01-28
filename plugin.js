@@ -465,8 +465,9 @@ define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'eve
             // Put the logo back in the page title
             document.querySelector('.headerLogo').classList.remove('hide');
 
-            document.querySelector('.headerSearchButton').classList.add('hide');
-            document.querySelector('.headerUserButton').classList.add('hide');
+            //TODO: Probably should add this back but seeing if it prevents the bug where the user/search are hidden since this is the only place that hides it
+            //document.querySelector('.headerSearchButton').classList.add('hide');
+            //document.querySelector('.headerUserButton').classList.add('hide');
         }
 
         function onViewShow(e) {
