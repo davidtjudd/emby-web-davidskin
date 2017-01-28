@@ -23,6 +23,8 @@ define(['loading', './../skinsettings', 'focusManager'], function (loading, skin
 
             skinSettings.enableAntiSpoliers(view.querySelector('.chkEnableEpisodeAntiSpoliers').checked);
 
+            skinSettings.enableGroupNewMovies(view.querySelector('.chkEnableGroupNewMovies').checked);
+
             skinSettings.apply();
         });
 
@@ -31,6 +33,8 @@ define(['loading', './../skinsettings', 'focusManager'], function (loading, skin
             focusManager.autoFocus(view);
 
             view.querySelector('.chkEnableEpisodeAntiSpoliers').checked = skinSettings.enableAntiSpoliers();
+
+            view.querySelector('.chkEnableGroupNewMovies').checked = skinSettings.enableGroupNewMovies();
         }
     };
 

@@ -99,5 +99,7 @@
   "PlayOnAnotherDevice": "Play on another device",
   "FastForward": "Fast-forward",
   "Items": "Items",
-  "PictureInPicture": "Picture in picture"
+  "PictureInPicture": "Picture in picture",
+  "EnableGroupNewMovies": "Group new movies",
+  "EnableGroupNewMoviesHelp": "Group your new movies by date added"
 }

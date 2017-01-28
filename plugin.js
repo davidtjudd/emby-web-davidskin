@@ -33,6 +33,8 @@ define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'eve
             var list = [
                 // Used for the mpaa rating
                 'css!' + pluginManager.mapPath(self, 'css/style'),
+                'css!' + pluginManager.mapPath(self, 'cards/card'),
+                //'css!' + 'http://localhost/emby/cards/card',
                 'css!' + pluginManager.mapPath(self, 'css/colors.dark')
             ];
 
@@ -224,6 +226,12 @@ define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'eve
 
             return routes;
         };
+
+        //function onUserDataChanged(e, apiClient, userData) {
+        //    require([self.id + '/cards/cardbuilder'], function (cardbuilder) {
+        //        cardbuilder.onUserDataChanged(userData);
+        //    });
+        //}
 
         var clockInterval;
         self.load = function () {

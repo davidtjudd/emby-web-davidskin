@@ -1,4 +1,4 @@
-define(['loading', 'alphaPicker', './../components/horizontallist', './../components/tabbedpage', 'backdrop', 'inputManager', 'focusManager', 'emby-itemscontainer'], function (loading, alphaPicker, horizontalList, tabbedPage, backdrop, inputManager, focusManager) {
+define(['loading', 'alphaPicker', './../components/horizontallist', './../components/tabbedpage', 'backdrop', 'inputManager', 'focusManager', 'dom', './../skinsettings', 'emby-itemscontainer'], function (loading, alphaPicker, horizontalList, tabbedPage, backdrop, inputManager, focusManager, dom, skinSettings) {
     'use strict';
 
     return function (view, params) {
@@ -36,7 +36,8 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                 if (newFocus.classList.contains("sectionTitle"))
                     newFocus = newSelectedParent.childNodes[1].childNodes[0];//for grouped items
                 newFocus.focus();
-                focusedElement = newFocus;
+                focusMan.focus(newFocus);
+                //focusedElement = newFocus;
                 //if (options.scroller) {
                 //    var now = new Date().getTime();
                 //    var animate = (now - lastFocus) > 50;
@@ -46,6 +47,17 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
             };
 
             return false;
+        };
+
+        function onKeyDown(e) {
+            if (e.keyCode === 34 || e.keyCode === 33) {
+                //e.preventDefault();
+                var isDown = false;
+                if (e.keyCode === 34)
+                    isDown = true;
+                var target = focusManager.focusableParent(e.target);
+                pageList(isDown, target, window.focusManager);
+            }
         };
 
         function onInputCommand(e) {
@@ -76,7 +88,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
             var slider = document.querySelector('.contentScrollSlider');
             inputManager.on(slider, onInputCommand);
             //from ods
-            //dom.addEventListener(window, 'keydown', onWindowKeyDown, {
+            //dom.addEventListener(window, 'keydown', onKeyDown, {
             //    passive: true
             //});
             if (!self.tabbedPage) {
@@ -90,6 +102,9 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
         view.addEventListener('viewbeforehide', function () {
             var slider = document.querySelector('.contentScrollSlider');
             inputManager.off(slider, onInputCommand);
+            //dom.removeEventListener(window, 'keydown', onKeyDown, {
+            //    passive: true
+            //});
         });
 
         view.addEventListener('viewdestroy', function () {
@@ -350,12 +365,22 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
         }
 
         function renderNewMovies(page, pageParams, autoFocus, scroller, resolve) {
-
+            var newMoviesOptions = {
+                //indexBy: 'DateCreated',
+                rows: {
+                    portrait: 2,
+                    square: 3,
+                    backdrop: 3
+                },
+                scalable: false
+            };
+            if (skinSettings.enableGroupNewMovies())
+                newMoviesOptions['indexBy'] = 'DateCreated';
             self.listController = new horizontalList({
                 itemsContainer: page.querySelector('.contentScrollSlider'),
                 Page: page,
                 getItemsMethod: function (startIndex, limit) {
-                    return Emby.Models.items({
+                    return Emby.Models.latestItems({
                         StartIndex: startIndex,
                         Limit: limit,
                         ParentId: pageParams.parentid,
@@ -363,7 +388,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                         Recursive: true,
                         SortBy: "DateCreated,SortName",
                         SortOrder: "Descending",
-                        Fields: "SortName"
+                        Fields: "SortName, DateCreated"
                     });
                 },
                 listCountElement: page.querySelector('.listCount'),
@@ -378,15 +403,17 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                         resolve = null;
                     }
                 },
-                cardOptions: {
-                    //indexBy: 'DateCreated',
-                    rows: {
-                        portrait: 2,
-                        square: 3,
-                        backdrop: 3
-                    },
-                    scalable: false
-                }
+                //cardOptions: {
+                //    //TODO: make this a setting - if we send indexby we can group
+                //    indexBy: 'DateCreated',
+                //    rows: {
+                //        portrait: 2,
+                //        square: 3,
+                //        backdrop: 3
+                //    },
+                //    scalable: false
+                //}
+                cardOptions: newMoviesOptions
             });
 
             self.listController.render();

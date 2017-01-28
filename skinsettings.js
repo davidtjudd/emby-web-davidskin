@@ -25,6 +25,15 @@ define(['userSettings', './skininfo'], function (userSettings, skininfo) {
             return self.get('antispoilers') !== 'false';
         };
 
+        self.enableGroupNewMovies = function (val) {
+
+            if (val != null) {
+                self.set('groupnewmovies', val.toString());
+            }
+
+            return self.get('groupnewmovies') === 'true';
+        };
+
         self.enableMovieDetailScenes = function (val) {
 
             if (val != null) {
