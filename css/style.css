@@ -209,6 +209,7 @@ h1 {
 .cardColumn {
     display: inline-block;
     vertical-align: top;
+    flex-shrink: 0;
 }
 
 .userViewNames h3 {
