@@ -114,13 +114,14 @@ define(['itemContextMenu', 'loading', './../skininfo', 'datetime', 'playbackMana
         function renderLogo(view, item, apiClient) {
 
             var url = logoImageUrl(item, apiClient, {
-                maxWidth: 300
+                Width: 1300
             });
 
             var detailLogo = view.querySelector('.detailLogo');
 
             if (url) {
                 detailLogo.classList.remove('hide');
+                view.querySelector('.itemTitle').classList.add('hide');
                 detailLogo.classList.add('lazy');
                 detailLogo.setAttribute('data-src', url);
                 imageLoader.lazyImage(detailLogo);
@@ -1326,7 +1327,7 @@ define(['itemContextMenu', 'loading', './../skininfo', 'datetime', 'playbackMana
                     // If it's a person, leave the backdrop image from wherever we came from
                     if (item.Type !== 'Person') {
                         backdrop.setBackdrops([item], {
-                            blur: 10
+                            //blur: 10
                         });
                         setTitle(item);
                     }

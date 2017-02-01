@@ -1,4 +1,4 @@
-define(['loading', 'alphaPicker', './../components/horizontallist', './../components/tabbedpage', 'backdrop', 'inputManager', 'focusManager', 'dom', './../skinsettings', 'emby-itemscontainer'], function (loading, alphaPicker, horizontalList, tabbedPage, backdrop, inputManager, focusManager, dom, skinSettings) {
+define(['loading', 'scrollHelper', './../skininfo', 'alphaPicker', './../components/horizontallist', './../components/tabbedpage', 'backdrop', 'inputManager', 'focusManager', 'dom', './../skinsettings', 'emby-itemscontainer'], function (loading, scrollHelper, skinInfo, alphaPicker, horizontalList, tabbedPage, backdrop, inputManager, focusManager, dom, skinSettings) {
     'use strict';
 
     return function (view, params) {
@@ -10,6 +10,9 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
         function pageList(isDown, focusedElement, focusMan) {
             var sliderObj = document.querySelector('.contentScrollSlider');
             var sliderScrollWidth = sliderObj.clientWidth;
+            console.log('slider - sliderScrollWidth:' + sliderScrollWidth);
+            //console.log(sliderObj.)
+            //document.elementFromPoint(2, 2);
             //get the col
             var focusedParent = focusedElement.parentNode;
             var focusedTopParent = focusedParent.parentNode;
@@ -33,10 +36,27 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                 newSelectedParent = sliderObj.lastChild;
             var newFocus = newSelectedParent.childNodes[0];
             if (newFocus != null) {
-                if (newFocus.classList.contains("sectionTitle"))
-                    newFocus = newSelectedParent.childNodes[1].childNodes[0];//for grouped items
+                if (newFocus.classList.contains("sectionTitle")) {
+                    console.log(newFocus.innerText + focusedParent.childNodes[0].innerText);
+                    if (newFocus === focusedParent.childNodes[0]) {
+                        var nextSection = focusedParent.previousSibling;
+                        if (isDown)
+                            nextSection = focusedParent.nextSibling;
+                        if (nextSection != null)
+                            newFocus = nextSection.childNodes[1].childNodes[0];
+                    }
+                    else
+                        newFocus = newSelectedParent.childNodes[1].childNodes[0];//for grouped items
+                }
                 newFocus.focus();
-                focusMan.focus(newFocus);
+                //newFocus.scrollIntoViewIfNeeded();
+                
+                //focusMan.focus(newFocus);
+                //scrollHelper.toCenter(sliderObj.parentElement, newFocus, true);
+                //newFocus.scrollIntoView();
+                setTimeout(function () { newFocus.scrollIntoViewIfNeeded(true) }, 500);
+                //self.tabbedPage.setFocusDelay(view, newFocus);
+                
                 //focusedElement = newFocus;
                 //if (options.scroller) {
                 //    var now = new Date().getTime();
@@ -60,8 +80,10 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
             }
         };
 
-        function onInputCommand(e) {
+        var lastPageDown = new Date().getTime();
 
+        function onInputCommand(e) {
+            console.log('slider - fired an event');
             switch (e.detail.command) {
                 case 'channeldown':
                     e.preventDefault();
@@ -73,7 +95,12 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                     break;
                 case 'pagedown':
                     e.preventDefault();
-                    pageList(true, e.target, window.focusManager);
+                    //let's check if we are flooding
+                    //var currentDate = new Date().getTime();
+                    //if ((currentDate - lastPageDown) > 300) {
+                        pageList(true, e.target, window.focusManager);
+                    //    lastPageDown = currentDate;
+                    //}
                     break;
                 case 'pageup':
                     e.preventDefault();
@@ -87,6 +114,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
         view.addEventListener('viewshow', function (e) {
             var slider = document.querySelector('.contentScrollSlider');
             inputManager.on(slider, onInputCommand);
+            console.log('slider - wired up slider');
             //from ods
             //dom.addEventListener(window, 'keydown', onKeyDown, {
             //    passive: true
@@ -102,6 +130,7 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
         view.addEventListener('viewbeforehide', function () {
             var slider = document.querySelector('.contentScrollSlider');
             inputManager.off(slider, onInputCommand);
+            console.log('slider - unwired slider');
             //dom.removeEventListener(window, 'keydown', onKeyDown, {
             //    passive: true
             //});
@@ -126,6 +155,10 @@ define(['loading', 'alphaPicker', './../components/horizontallist', './../compon
                 element: view.querySelector('.alphaPicker'),
                 itemsContainer: view.querySelector('.contentScrollSlider'),
                 itemClass: 'card'
+            });
+
+            document.querySelector('.filterButton').addEventListener('click', function () {
+                Emby.Page.show(Emby.PluginManager.mapRoute(skinInfo.id, 'filter/filter.html'));
             });
 
             var tabs = [

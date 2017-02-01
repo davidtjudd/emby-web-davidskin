@@ -224,6 +224,15 @@ define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'eve
                 title: self.name
             });
 
+            routes.push({
+                path: 'filter/filter.html',
+                transition: 'slide',
+                controller: self.id + '/filter/filter',
+                dependencies: [
+                    'emby-checkbox'
+                ]
+            });
+
             return routes;
         };
 

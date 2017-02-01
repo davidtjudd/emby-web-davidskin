@@ -194,11 +194,11 @@
 }
 
 .detailLogo {
-    width: 13vw;
-    height: 3vw;
-    position: absolute;
+    width: 23vw;
+    height: 13vw;
+    /*position: absolute;
     top: 8.5%;
-    right: 7%;
+    right: 7%;*/
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
