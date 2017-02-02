@@ -359,7 +359,15 @@ define(['itemContextMenu', 'loading', './../skininfo', 'datetime', 'playbackMana
             var mediaInfoElem = view.querySelector('.mediaInfoPrimary');
             if (item.Type === 'Season') {
                 mediaInfoElem.classList.add('hide');
-            } else {
+            }
+                //else if (item.Type === 'Movie') {
+                //    mediaInfoElem.classList.remove('hide');
+                //    fillMoviePrimaryMediaInfo(mediaInfoElem, item);
+                //    mediaInfo.afterFill(mediaInfoElem, item, {
+                //        interactive: true
+                //    });
+                //} 
+            else {
                 mediaInfoElem.classList.remove('hide');
                 mediaInfo.fillPrimaryMediaInfo(mediaInfoElem, item, {
                     interactive: true
@@ -430,6 +438,10 @@ define(['itemContextMenu', 'loading', './../skininfo', 'datetime', 'playbackMana
                 birthPlaceElem.classList.add('hide');
             }
         }
+
+        function fillMoviePrimaryMediaInfo(mediaInfoElem, item) {
+
+}
 
         function renderRecordingFields(instance, recordingFieldsElement, item) {
 
