@@ -34,10 +34,9 @@ define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'eve
                 // Used for the mpaa rating
                 'css!' + pluginManager.mapPath(self, 'css/style'),
                 'css!' + pluginManager.mapPath(self, 'css/colors.dark'),
-                'flexStyles'
                 'css!' + pluginManager.mapPath(self, 'cards/card'),
+                'flexStyles'
                 //'css!' + 'http://localhost/emby/cards/card',
-                'css!' + pluginManager.mapPath(self, 'css/colors.dark')
             ];
 
             if (browser.android) {
