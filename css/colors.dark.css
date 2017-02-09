@@ -30,6 +30,10 @@ a {
         background: linear-gradient(rgba(6, 6, 6, .9), rgba(6, 6, 6, .6), rgba(6, 6, 6, .9));
     }
 
+.detailBackgroundContainer.withBackdrop {
+    background: linear-gradient(to right, rgba(0, 0, 0, .99), rgba(0, 0, 0, .94), rgba(0, 0, 0, .5)) !important;
+}
+
 .headerLogo {
     background-image: url(images/logowhite.png);
 }
@@ -60,8 +64,8 @@ a {
     color: #fff;
 }
 
-.cardFooter:not(.cardFooter-round) {
-    background-color: #333;
+.visualCardBox {
+    background-color: #333!important;
 }
 
 .card:focus:not(.card-round) .cardBox {

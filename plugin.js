@@ -33,6 +33,8 @@ define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'eve
             var list = [
                 // Used for the mpaa rating
                 'css!' + pluginManager.mapPath(self, 'css/style'),
+                'css!' + pluginManager.mapPath(self, 'css/colors.dark'),
+                'flexStyles'
                 'css!' + pluginManager.mapPath(self, 'cards/card'),
                 //'css!' + 'http://localhost/emby/cards/card',
                 'css!' + pluginManager.mapPath(self, 'css/colors.dark')
@@ -406,10 +408,15 @@ define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'eve
             events.off(playbackManager, 'playbackstop', onPlaybackStop);
         }
 
-        function onPlaybackStart(e) {
+        function onPlaybackStart(e, player, state) {
 
             if (playbackManager.isPlayingAudio()) {
                 document.querySelector('.headerAudioPlayerButton').classList.remove('hide');
+
+                if (state.IsFirstItem && state.IsFullscreen) {
+                    self.showNowPlaying();
+                }
+
             } else {
                 document.querySelector('.headerAudioPlayerButton').classList.add('hide');
             }
@@ -474,9 +481,8 @@ define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'eve
             // Put the logo back in the page title
             document.querySelector('.headerLogo').classList.remove('hide');
 
-            //TODO: Probably should add this back but seeing if it prevents the bug where the user/search are hidden since this is the only place that hides it
-            //document.querySelector('.headerSearchButton').classList.add('hide');
-            //document.querySelector('.headerUserButton').classList.add('hide');
+            document.querySelector('.headerSearchButton').classList.add('hide');
+            document.querySelector('.headerUserButton').classList.add('hide');
         }
 
         function onViewShow(e) {

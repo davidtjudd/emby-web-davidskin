@@ -134,7 +134,7 @@ define(['imageLoader', 'itemHelper', 'backdrop', 'mediaInfo', 'focusManager', 's
                             options.scroller.toCenter(focused, !animate);
                             lastFocus = now;
                         } else if (options.scrollElement) {
-                            scrollHelper.toCenter(options.scrollElement, focused, options.horizontal);
+                            scrollHelper.toCenter(options.scrollElement, focused, isHorizontal);
                         }
                     }
                     startZoomTimer();

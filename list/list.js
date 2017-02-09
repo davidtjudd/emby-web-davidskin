@@ -1,30 +1,19 @@
-define(['loading', 'scroller', 'playbackManager', 'alphaPicker', './../components/horizontallist', 'emby-itemscontainer'], function (loading, scroller, playbackManager, alphaPicker, horizontalList) {
+define(['loading', 'scroller', 'playbackManager', 'alphaPicker', './../components/itemslist', 'emby-itemscontainer'], function (loading, scroller, playbackManager, alphaPicker, itemsList) {
     'use strict';
 
-    function createHorizontalScroller(instance, view, item, loading) {
+    function createItemsScroller(instance, view, item, loading) {
 
         var scrollFrame = view.querySelector('.scrollFrame');
 
         scrollFrame.style.display = 'block';
 
         var options = {
-            horizontal: 1,
-            itemNav: 0,
-            mouseDragging: 1,
-            touchDragging: 1,
+            horizontal: 0,
             slidee: view.querySelector('.scrollSlider'),
-            itemSelector: '.card',
-            smart: true,
-            releaseSwing: true,
-            scrollBar: view.querySelector('.scrollbar'),
             scrollBy: 200,
             speed: 270,
-            elasticBounds: 1,
-            dragHandle: 1,
-            dynamicHandle: 1,
-            clickBar: 1,
-            //centerOffset: window.innerWidth * .05,
-            scrollWidth: 500000
+            scrollWidth: 50000,
+            immediateSpeed: 160
         };
 
         instance.scroller = new scroller(scrollFrame, options);
@@ -81,27 +70,23 @@ define(['loading', 'scroller', 'playbackManager', 'alphaPicker', './../component
 
     function loadChildren(instance, view, item, loading) {
 
-        instance.listController = new horizontalList({
+        var enableCardLayout = item.Type !== 'PhotoAlbum';
 
-            itemsContainer: view.querySelector('.scrollSlider'),
+        instance.listController = new itemsList({
+
+            itemsContainer: view.querySelector('.itemsContainer'),
             getItemsMethod: function (startIndex, limit) {
 
                 return getItems(instance.params, item, startIndex, limit);
             },
-            listCountElement: view.querySelector('.listCount'),
-            listNumbersElement: view.querySelector('.listNumbers'),
-            selectedItemInfoElement: view.querySelector('.selectedItemInfo'),
-            selectedIndexElement: view.querySelector('.selectedIndex'),
             scroller: instance.scroller,
             cardOptions: {
                 coverImage: true,
-                rows: {
-                    portrait: 2,
-                    square: 3,
-                    backdrop: 3,
-                    banner: 6
-                },
-                scalable: false
+                shape: 'autoVertical',
+                cardLayout: enableCardLayout,
+                showTitle: enableCardLayout,
+                showYear: enableCardLayout,
+                vibrant: enableCardLayout
             }
         });
 
@@ -132,7 +117,7 @@ define(['loading', 'scroller', 'playbackManager', 'alphaPicker', './../component
                 currentItem = item;
 
                 if (!isRestored) {
-                    createHorizontalScroller(self, view, item, loading);
+                    createItemsScroller(self, view, item, loading);
 
                     if (item.Type !== 'PhotoAlbum') {
                         initAlphaPicker();

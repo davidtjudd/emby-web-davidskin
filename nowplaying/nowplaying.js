@@ -141,7 +141,7 @@ define(['playbackManager', 'datetime', 'backdrop', 'userdataButtons', 'cardBuild
             console.log('nowplaying event: ' + e.type);
             var player = this;
 
-            if (state.nextMediaType !== 'Audio') {
+            if (state.NextMediaType !== 'Audio') {
                 Emby.Page.back();
             }
         }

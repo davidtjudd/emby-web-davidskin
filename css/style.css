@@ -99,10 +99,6 @@ h1 {
     display: none !important;
 }
 
-.flex-direction-column {
-    flex-direction: column;
-}
-
 .pageContainer {
     padding-top: 11vh;
     overflow: hidden;
@@ -114,12 +110,6 @@ h1 {
         overflow: hidden;
         display: flex;
         contain: strict;
-    }
-
-    .pageContainer.vertical.fullWidth {
-        display: block;
-        width: 94.5%;
-        margin: auto;
     }
 
     .pageContainer.vertical.centered {
@@ -166,9 +156,12 @@ h1 {
 }
 
 .scrollFrameY > .scrollSlider {
-    padding: 0 2%;
     /* Needed for native scroll */
     flex-grow: 1;
+}
+
+.scrollFrameY .verticalSection {
+    padding: 0 4%;
 }
 
 .horizontalSectionsContainer {
@@ -445,13 +438,11 @@ h1 {
 
 .listPageButtons {
     text-align: center;
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
 }
 
     .listPageButtons button {
-        padding: .2em .8em .35em;
-        text-transform: none;
-        font-size: 86%;
+        padding: .5em 1em;
     }
 
 
