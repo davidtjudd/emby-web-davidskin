@@ -803,6 +803,7 @@
 
                         lines.push(getTextActionButton({
                             Id: item.SeriesId,
+                            ServerId: item.ServerId,
                             Name: item.SeriesName,
                             Type: 'Series',
                             IsFolder: true
@@ -849,7 +850,7 @@
                     if (isOuterFooter && item.AlbumArtists && item.AlbumArtists.length) {
                         item.AlbumArtists[0].Type = 'MusicArtist';
                         item.AlbumArtists[0].IsFolder = true;
-                        lines.push(getTextActionButton(item.AlbumArtists[0]));
+                        lines.push(getTextActionButton(item.AlbumArtists[0], null, item.ServerId));
                     } else {
                         lines.push(isUsingLiveTvNaming(item) ? item.Name : (item.SeriesName || item.Album || item.AlbumArtist || item.GameSystem || ""));
                     }
@@ -960,6 +961,7 @@
                         lines.push(getTextActionButton({
 
                             Id: item.ChannelId,
+                            ServerId: item.ServerId,
                             Name: item.ChannelName,
                             Type: 'TvChannel',
                             MediaType: item.MediaType,
@@ -1031,7 +1033,9 @@
                 lines = [];
             }
 
-            html += getCardTextLines(lines, cssClass, !options.overlayText, isOuterFooter, options.cardLayout, isOuterFooter && options.cardLayout && !options.centerText, options.lines);
+            var addRightTextMargin = isOuterFooter && options.cardLayout && !options.centerText && options.cardFooterAside !== 'none' && !layoutManager.tv;
+
+            html += getCardTextLines(lines, cssClass, !options.overlayText, isOuterFooter, options.cardLayout, addRightTextMargin, options.lines);
 
             if (progressHtml) {
                 html += progressHtml;
@@ -1058,13 +1062,17 @@
             return html;
         }
 
-        function getTextActionButton(item, text) {
+        function getTextActionButton(item, text, serverId) {
 
             if (!text) {
                 text = itemHelper.getDisplayName(item);
             }
 
-            var html = '<button data-id="' + item.Id + '" data-type="' + item.Type + '" data-mediatype="' + item.MediaType + '" data-channelid="' + item.ChannelId + '" data-isfolder="' + item.IsFolder + '" type="button" class="itemAction textActionButton" data-action="link">';
+            if (layoutManager.tv) {
+                return text;
+            }
+
+            var html = '<button data-id="' + item.Id + '" data-serverid="' + (serverId || item.ServerId) + '" data-type="' + item.Type + '" data-mediatype="' + item.MediaType + '" data-channelid="' + item.ChannelId + '" data-isfolder="' + item.IsFolder + '" type="button" class="itemAction textActionButton" data-action="link">';
             html += text;
             html += '</button>';
 
@@ -1281,7 +1289,7 @@
                     overlayPlayButton = item.MediaType === 'Video';
                 }
 
-                if (overlayPlayButton && !item.IsPlaceHolder && (item.LocationType !== 'Virtual' || !item.MediaType || item.Type === 'Program') && item.Type !== 'Person' && item.PlayAccess === 'Full') {
+                if (overlayPlayButton && !item.IsPlaceHolder && (item.LocationType !== 'Virtual' || !item.MediaType || item.Type === 'Program') && item.Type !== 'Person') {
                     overlayButtons += '<button is="paper-icon-button-light" class="cardOverlayButton itemAction autoSize" data-action="play" onclick="return false;"><i class="md-icon">play_arrow</i></button>';
                 }
                 if (options.overlayMoreButton) {
