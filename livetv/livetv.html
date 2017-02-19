@@ -1,18 +1,131 @@
-<div class="pageContainer flex horizontalPageContent flex-direction-column">
+<div class="pageContainer fullWidth vertical flex flex-direction-column">
 
-    <div class="userViewNames">
-    </div>
+    <div class="scrollFrame scrollFrameY flex flex-grow">
 
-    <div class="scrollFrame scrollFrameX itemScrollFrame topPadded" style="white-space: nowrap;">
-        <div is="emby-itemscontainer" class="scrollSlider contentScrollSlider">
+        <div class="scrollSlider flex-grow tabs-container">
+
+            <div is="emby-tabs" class="viewTabs">
+                <div class="emby-tabs-slider" style="text-align:center;">
+                    <button is="emby-button" class="emby-tab-button emby-tab-button-active" data-index="0">
+                        <div class="emby-button-foreground">${Suggestions}</div>
+                    </button>
+                    <button is="emby-button" class="emby-tab-button hide" data-index="1">
+                        <div class="emby-button-foreground">${Guide}</div>
+                    </button>
+                    <button is="emby-button" class="emby-tab-button" data-index="2">
+                        <div class="emby-button-foreground">${Channels}</div>
+                    </button>
+                    <button is="emby-button" class="emby-tab-button" data-index="3">
+                        <div class="emby-button-foreground">${Recordings}</div>
+                    </button>
+                    <button is="emby-button" class="emby-tab-button" data-index="4">
+                        <div class="emby-button-foreground">${Schedule}</div>
+                    </button>
+                    <button is="emby-button" class="emby-tab-button" data-index="5">
+                        <div class="emby-button-foreground">${Series}</div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="tabContent padded-top" id="suggestionsTab" data-index="0">
+                <div class="activeRecordings verticalSection hide">
+                    <h2 class="sectionTitle">${HeaderActiveRecordings}</h2>
+                    <div is="emby-itemscontainer" class="itemsContainer focuscontainer-x"></div>
+                </div>
+                <div class="activePrograms hide verticalSection">
+                    <div>
+                        <h2 class="sectionTitle" style="display: inline-block; vertical-align: middle;">${HeaderOnNow}</h2>
+                    </div>
+                    <div is="emby-itemscontainer" class="activeProgramItems itemsContainer focuscontainer-x"></div>
+                </div>
+                <div class="upcomingTvMovies hide verticalSection">
+                    <div>
+                        <h2 class="sectionTitle" style="display: inline-block; vertical-align: middle;">${HeaderUpcomingMovies}</h2>
+                    </div>
+                    <div is="emby-itemscontainer" class="upcomingTvMovieItems itemsContainer focuscontainer-x"></div>
+                </div>
+                <div class="upcomingSports hide verticalSection">
+                    <div>
+                        <h2 class="sectionTitle" style="display: inline-block; vertical-align: middle;">${HeaderUpcomingSports}</h2>
+                    </div>
+                    <div is="emby-itemscontainer" class="upcomingSportsItems itemsContainer focuscontainer-x"></div>
+                </div>
+                <div class="upcomingKids hide verticalSection">
+                    <div>
+                        <h2 class="sectionTitle" style="display: inline-block; vertical-align: middle;">${HeaderUpcomingForKids}</h2>
+                    </div>
+                    <div is="emby-itemscontainer" class="upcomingKidsItems itemsContainer focuscontainer-x"></div>
+                </div>
+                <div class="upcomingPrograms hide verticalSection">
+                    <div>
+                        <h2 class="sectionTitle" style="display: inline-block; vertical-align: middle;">${HeaderUpcomingPrograms}</h2>
+                    </div>
+                    <div is="emby-itemscontainer" class="upcomingProgramItems itemsContainer focuscontainer-x"></div>
+                </div>
+            </div>
+            <div class="tabContent" id="guideTab" data-index="1" style="width:auto;padding-top:0; padding-bottom: 0;">
+            </div>
+            <div class="tabContent padded-left padded-right padded-top" data-index="2">
+                <div class="hide" style="text-align: center; display: flex; flex-wrap: wrap; align-items: center; justify-content: center;padding:0 .5em 1em;">
+                    <div class="paging"></div>
+                    <button is="paper-icon-button-light" class="btnFilter autoSize" title="${ButtonFilter}"><i class="md-icon">filter_list</i></button>
+                </div>
+                <div is="emby-itemscontainer" class="itemsContainer vertical-wrap centered"></div>
+            </div>
+            <div class="tabContent padded-top" data-index="3">
+                <div class="activeRecordings verticalSection hide">
+                    <h2 class="sectionTitle">${HeaderActiveRecordings}</h2>
+                    <div is="emby-itemscontainer" class="itemsContainer"></div>
+                </div>
+                <div class="latestRecordings verticalSection hide">
+                    <div>
+                        <h2 class="sectionTitle" style="display: inline-block; vertical-align: middle;">${LatestRecordings}</h2>
+                    </div>
+                    <div is="emby-itemscontainer" class="itemsContainer"></div>
+                </div>
+                <div class="movieRecordings verticalSection hide">
+                    <div>
+                        <h2 class="sectionTitle" style="display: inline-block; vertical-align: middle;">${Movies}</h2>
+                    </div>
+                    <div is="emby-itemscontainer" class="itemsContainer"></div>
+                </div>
+                <div class="episodeRecordings verticalSection hide">
+                    <div>
+                        <h2 class="sectionTitle" style="display: inline-block; vertical-align: middle;">${Series}</h2>
+                    </div>
+                    <div is="emby-itemscontainer" class="itemsContainer"></div>
+                </div>
+                <div class="sportsRecordings verticalSection hide">
+                    <div>
+                        <h2 class="sectionTitle" style="display: inline-block; vertical-align: middle;">${Sports}</h2>
+                    </div>
+                    <div is="emby-itemscontainer" class="itemsContainer"></div>
+                </div>
+                <div class="kidsRecordings verticalSection hide">
+                    <div>
+                        <h2 class="sectionTitle" style="display: inline-block; vertical-align: middle;">${HeaderForKids}</h2>
+                    </div>
+                    <div is="emby-itemscontainer" class="itemsContainer"></div>
+                </div>
+                <div class="recordingGroups hide verticalSection">
+                    <div>
+                        <h2 class="sectionTitle" style="display: inline-block; vertical-align: middle;">${HeaderRecordingGroups}</h2>
+                    </div>
+                    <div id="recordingGroupItems"></div>
+                </div>
+            </div>
+            <div class="tabContent padded-top" id="scheduleTab" data-index="4">
+                <div class="activeRecordings verticalSection hide">
+                    <h2 class="sectionTitle">${HeaderActiveRecordings}</h2>
+                    <div is="emby-itemscontainer" class="itemsContainer"></div>
+                </div>
+                <div class="upcomingRecordings">
+                </div>
+            </div>
+            <div class="tabContent padded-left padded-right padded-top" data-index="5">
+                <div is="emby-itemscontainer" class="itemsContainer vertical-wrap centered"></div>
+            </div>
         </div>
-    </div>
-    <div class="selectedItemInfo">
-    </div>
-    <div class="listNumbers hide">
-        <span class="selectedIndex"></span>
-        <span class="listNumbersDivider">|</span>
-        <span class="listCount"></span>
     </div>
 
 </div>

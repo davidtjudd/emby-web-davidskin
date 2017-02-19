@@ -962,7 +962,7 @@ define(['itemContextMenu', 'loading', './../skininfo', 'datetime', 'scrollHelper
                 // Use dedicated episodes endpoint
                 promise = apiClient.getEpisodes(item.SeriesId, {
 
-                    seasonId: item.Id,
+                    SeasonId: item.Id,
                     UserId: userId,
                     Fields: fields
                 });
@@ -976,7 +976,7 @@ define(['itemContextMenu', 'loading', './../skininfo', 'datetime', 'scrollHelper
                 // Use dedicated episodes endpoint
                 promise = apiClient.getEpisodes(item.SeriesId, {
 
-                    seasonId: item.SeasonId,
+                    SeasonId: item.SeasonId,
                     UserId: userId,
                     Fields: fields
                 });

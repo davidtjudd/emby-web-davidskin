@@ -51,6 +51,14 @@
   "Search": "Search",
   "Trailer": "Trailer",
   "PlayAll": "Play All",
+  "Suggestions": "Suggestions",
+  "Schedule": "Schedule",
+  "Series": "Series",
+  "HeaderUpcomingPrograms": "Upcoming Programs",
+  "HeaderUpcomingMovies": "Upcoming Movies",
+  "HeaderUpcomingSports": "Upcoming Sports",
+  "HeaderUpcomingForKids": "Upcoming for Kids",
+  "HeaderOnNow": "On Now",
   "OptionSunday": "Sunday",
   "OptionMonday": "Monday",
   "OptionTuesday": "Tuesday",
@@ -102,4 +110,6 @@
   "PictureInPicture": "Picture in picture",
   "EnableGroupNewMovies": "Group new movies",
   "EnableGroupNewMoviesHelp": "Group your new movies by date added"
+  "PictureInPicture": "Picture in picture",
+  "HeaderActiveRecordings": "Active Recordings"
 }

@@ -51,7 +51,6 @@ define(['playbackManager', 'pluginManager', 'browser', 'connectionManager', 'eve
                 list.push('css!' + pluginManager.mapPath(self, 'css/fonts.device'));
             } else {
                 console.log("Using default fonts");
-                //list.push('opensansFont');
                 list.push('css!' + pluginManager.mapPath(self, 'css/fonts'));
             }
 

@@ -23,7 +23,7 @@ a {
     }
 
 .backgroundContainer {
-    background: #181818;
+    background: #141414;
 }
 
     .backgroundContainer.withBackdrop {
@@ -59,13 +59,9 @@ a {
     color: #fff;
 }
 
-.emby-button:focus:not(.btnUserViewHeader) {
+.emby-button:focus:not(.btnUserViewHeader):not(.emby-tab-button) {
     background: #52B54B;
     color: #fff;
-}
-
-.visualCardBox {
-    background-color: #333!important;
 }
 
 .card:focus:not(.card-round) .cardBox {
@@ -127,15 +123,6 @@ a {
 .emptyStar {
     color: #bbb !important;
 }
-
-.userViewNames button:focus {
-    color: #52B54B !important;
-    opacity: 1;
-}
-
-    .userViewNames button:focus .userViewButtonText {
-        border-bottom-color: #52B54B;
-    }
 
 .userViewNames button:focus {
     color: #52B54B !important;

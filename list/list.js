@@ -1,11 +1,9 @@
 define(['loading', 'scroller', 'playbackManager', 'alphaPicker', './../components/itemslist', 'emby-itemscontainer'], function (loading, scroller, playbackManager, alphaPicker, itemsList) {
     'use strict';
 
-    function createItemsScroller(instance, view, item, loading) {
+    function createVerticalScroller(instance, view, item, loading) {
 
         var scrollFrame = view.querySelector('.scrollFrame');
-
-        scrollFrame.style.display = 'block';
 
         var options = {
             horizontal: 0,
@@ -117,7 +115,7 @@ define(['loading', 'scroller', 'playbackManager', 'alphaPicker', './../component
                 currentItem = item;
 
                 if (!isRestored) {
-                    createItemsScroller(self, view, item, loading);
+                    createVerticalScroller(self, view, item, loading);
 
                     if (item.Type !== 'PhotoAlbum') {
                         initAlphaPicker();

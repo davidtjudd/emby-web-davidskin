@@ -1,176 +1,157 @@
-define(['loading', 'alphaPicker', './../components/horizontallist', './../components/tabbedpage', 'backdrop', 'connectionManager', 'emby-itemscontainer'], function (loading, alphaPicker, horizontalList, tabbedPage, backdrop, connectionManager) {
+define(['loading', 'backdrop', 'connectionManager', 'scroller', 'globalize', 'require', './../components/focushandler', 'emby-itemscontainer', 'emby-tabs'], function (loading, backdrop, connectionManager, scroller, globalize, require, focusHandler) {
     'use strict';
 
-    function renderTabs(view, initialTabId, pageInstance, params) {
+    function createVerticalScroller(instance, view) {
 
-        var tabs = [
-        {
-            Name: Globalize.translate('Channels'),
-            Id: "channels"
-        },
-        {
-            Name: Globalize.translate('Recordings'),
-            Id: "recordings"
-        }
-        //,
-        //{
-        //    Name: Globalize.translate('Scheduled'),
-        //    Id: "scheduled"
-        //}
-        ];
+        var scrollFrame = view.querySelector('.scrollFrame');
 
-        var tabbedPageInstance = new tabbedPage(view);
-        tabbedPageInstance.loadViewContent = loadViewContent;
-        tabbedPageInstance.params = params;
-        tabbedPageInstance.renderTabs(tabs, initialTabId);
-        pageInstance.tabbedPage = tabbedPageInstance;
-    }
+        var options = {
+            horizontal: 0,
+            slidee: view.querySelector('.scrollSlider'),
+            scrollBy: 200,
+            speed: 270,
+            scrollWidth: 50000,
+            immediateSpeed: 160
+        };
 
-    function loadViewContent(page, id, type) {
+        instance.scroller = new scroller(scrollFrame, options);
+        instance.scroller.init();
 
-        var tabbedPage = this;
-
-        return new Promise(function (resolve, reject) {
-
-            if (self.listController) {
-                self.listController.destroy();
-            }
-
-            var pageParams = tabbedPage.params;
-
-            var autoFocus = false;
-
-            if (!tabbedPage.hasLoaded) {
-                autoFocus = true;
-                tabbedPage.hasLoaded = true;
-            }
-
-            switch (id) {
-
-                case 'channels':
-                    renderChannels(page, pageParams, autoFocus, tabbedPage.bodyScroller, resolve);
-                    break;
-                case 'recordings':
-                    renderRecordings(page, pageParams, autoFocus, tabbedPage.bodyScroller, resolve);
-                    break;
-                case 'scheduled':
-                    break;
-                default:
-                    break;
-            }
+        instance.focusHandler = new focusHandler({
+            parent: view.querySelector('.scrollSlider'),
+            scroller: instance.scroller,
+            enableBackdrops: false
         });
-    }
-
-    function renderChannels(page, pageParams, autoFocus, scroller, resolve) {
-
-        self.listController = new horizontalList({
-
-            itemsContainer: page.querySelector('.contentScrollSlider'),
-            getItemsMethod: function (startIndex, limit) {
-
-                var apiClient = connectionManager.getApiClient(pageParams.serverId);
-                return apiClient.getLiveTvChannels({
-                    StartIndex: startIndex,
-                    Limit: limit,
-                    SortBy: "DateCreated,SortName",
-                    SortOrder: "Descending",
-                    UserId: apiClient.getCurrentUserId(),
-                    Fields: "PrimaryImageAspectRatio",
-                    ImageTypeLimit: 1
-                });
-            },
-            listCountElement: page.querySelector('.listCount'),
-            listNumbersElement: page.querySelector('.listNumbers'),
-            autoFocus: autoFocus,
-            selectedItemInfoElement: page.querySelector('.selectedItemInfo'),
-            selectedIndexElement: page.querySelector('.selectedIndex'),
-            scroller: scroller,
-            onRender: function () {
-                if (resolve) {
-                    resolve();
-                    resolve = null;
-                }
-            },
-            cardOptions: {
-                action: 'play',
-                rows: {
-                    portait: 2,
-                    square: 3,
-                    backdrop: 3
-                },
-                scalable: false,
-                overlayText: true,
-                showTitle: false,
-                cardLayout: false,
-                showCurrentProgram: false
-            }
-        });
-
-        self.listController.render();
-    }
-
-    function renderRecordings(page, pageParams, autoFocus, scroller, resolve) {
-
-        self.listController = new horizontalList({
-
-            itemsContainer: page.querySelector('.contentScrollSlider'),
-            getItemsMethod: function (startIndex, limit) {
-                return Emby.Models.recordings({
-                    StartIndex: startIndex,
-                    Limit: limit,
-                    SortBy: "DateCreated,SortName",
-                    SortOrder: "Descending"
-                });
-            },
-            listCountElement: page.querySelector('.listCount'),
-            listNumbersElement: page.querySelector('.listNumbers'),
-            autoFocus: autoFocus,
-            selectedItemInfoElement: page.querySelector('.selectedItemInfo'),
-            selectedIndexElement: page.querySelector('.selectedIndex'),
-            scroller: scroller,
-            onRender: function () {
-                if (resolve) {
-                    resolve();
-                    resolve = null;
-                }
-            },
-            cardOptions: {
-                rows: {
-                    portrait: 2,
-                    square: 3,
-                    backdrop: 3
-                },
-                scalable: false,
-                showParentTitleOrTitle: true,
-                overlayText: true
-            }
-        });
-
-        self.listController.render();
     }
 
     return function (view, params) {
 
         var self = this;
 
-        view.addEventListener('viewshow', function (e) {
+        var tabControllers = [];
+        var currentTabController;
 
-            require(['loading'], function (loading) {
+        function getTabController(page, index, callback) {
 
-                if (!self.tabbedPage) {
-                    loading.show();
-                    renderTabs(view, params.tab, self, params);
+            var depends = [];
+
+            switch (index) {
+
+                case 0:
+                    depends.push('./suggestions');
+                    break;
+                case 1:
+                    depends.push('./suggestions');
+                    break;
+                case 2:
+                    depends.push('./channels');
+                    break;
+                case 3:
+                    depends.push('./recordings');
+                    break;
+                case 4:
+                    depends.push('./schedule');
+                    break;
+                case 5:
+                    depends.push('./series');
+                    break;
+                default:
+                    break;
+            }
+
+            require(depends, function (controllerFactory) {
+
+                var controller = tabControllers[index];
+                if (!controller) {
+                    var tabContent = view.querySelector('.tabContent[data-index=\'' + index + '\']');
+                    controller = new controllerFactory(tabContent, params, view);
+                    tabControllers[index] = controller;
                 }
 
-                Emby.Page.setTitle(Globalize.translate('LiveTV'));
-                backdrop.clear();
+                callback(controller);
             });
+        }
+
+
+        function preLoadTab(page, index) {
+
+            getTabController(page, index, function (controller) {
+                if (controller.onBeforeShow) {
+                    controller.onBeforeShow();
+                }
+            });
+        }
+
+        function loadTab(page, index) {
+
+            getTabController(page, index, function (controller) {
+
+                controller.onShow();
+                currentTabController = controller;
+            });
+        }
+
+        createVerticalScroller(self, view);
+
+        var viewTabs = view.querySelector('.viewTabs');
+        var initialTabIndex = parseInt(params.tab || '0');
+
+        viewTabs.addEventListener('beforetabchange', function (e) {
+            preLoadTab(view, parseInt(e.detail.selectedTabIndex));
         });
 
-        view.addEventListener('viewdestroy', function () {
+        viewTabs.addEventListener('tabchange', function (e) {
 
-            if (self.tabbedPage) {
-                self.tabbedPage.destroy();
+            var previousTabController = tabControllers[parseInt(e.detail.previousIndex)];
+            if (previousTabController && previousTabController.onHide) {
+                previousTabController.onHide();
+            }
+
+            loadTab(view, parseInt(e.detail.selectedTabIndex));
+        });
+
+        view.addEventListener('viewbeforehide', function (e) {
+
+            if (currentTabController && currentTabController.onHide) {
+                currentTabController.onHide();
+            }
+        });
+
+        view.addEventListener('viewbeforeshow', function () {
+            if (initialTabIndex == null) {
+                viewTabs.triggerBeforeTabChange();
+            }
+        });
+
+        view.addEventListener('viewshow', function (e) {
+
+            Emby.Page.setTitle(globalize.translate('LiveTV'));
+            backdrop.clear();
+
+            if (initialTabIndex != null) {
+                viewTabs.selectedIndex(initialTabIndex);
+                initialTabIndex = null;
+            } else {
+                viewTabs.triggerTabChange();
+            }
+        });
+
+        view.addEventListener('viewdestroy', function (e) {
+
+            tabControllers.forEach(function (t) {
+                if (t.destroy) {
+                    t.destroy();
+                }
+            });
+
+            if (self.focusHandler) {
+                self.focusHandler.destroy();
+                self.focusHandler = null;
+            }
+
+            if (self.scroller) {
+                self.scroller.destroy();
+                self.scroller = null;
             }
         });
     };

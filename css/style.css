@@ -100,13 +100,13 @@ h1 {
 }
 
 .pageContainer {
-    padding-top: 11vh;
+    padding-top: 10vh;
     overflow: hidden;
     contain: layout style;
 }
 
     .pageContainer.flex {
-        padding-top: 11vh;
+        padding-top: 10vh;
         overflow: hidden;
         display: flex;
         contain: strict;
@@ -136,6 +136,10 @@ h1 {
     padding-left: 3.75%;
 }
 
+.userViewButtonText {
+    font-weight: normal;
+}
+
 .itemScrollFrame.scrollFrameX {
     overflow: hidden;
 }
@@ -149,7 +153,7 @@ h1 {
         padding-top: 1.1em;
     }
 
-.itemScrollFrame.scrollFrameY {
+.itemScrollFrameY {
     height: 100%;
     /* Needed for native scroll */
     display: flex;
@@ -158,10 +162,8 @@ h1 {
 .scrollFrameY > .scrollSlider {
     /* Needed for native scroll */
     flex-grow: 1;
-}
-
-.scrollFrameY .verticalSection {
-    padding: 0 4%;
+    /* Don't allow width to expand beyond parent size */
+    width: 100%;
 }
 
 .horizontalSectionsContainer {
@@ -450,9 +452,13 @@ h1 {
     margin-bottom: 3em;
 }
 
-    .verticalSection > h2 {
-        margin-bottom: .25em;
-    }
+.sectionTitle {
+    margin-bottom: .25em;
+}
+
+.verticalSection .sectionTitle {
+    margin-top: 0;
+}
 
 .mainSection .raised {
     padding: .7em 1.3em;
@@ -469,5 +475,53 @@ button.mini {
 }
 
 .xlargePaperIconButton {
-    font-size: 2.1em !important;
+    font-size: 2em !important;
+}
+
+.padded-left {
+    padding-left: .25em;
+}
+
+.padded-right {
+    padding-right: .25em;
+}
+
+.padded-top {
+    padding-top: 1em;
+}
+
+.padded-bottom {
+    padding-bottom: 1em;
+}
+
+.padded-top-focusscale {
+    padding-top: 1.5em;
+    margin-top: -1.5em;
+}
+
+.padded-bottom-focusscale {
+    padding-bottom: 1.5em;
+    margin-bottom: -1.5em;
+}
+
+@media all and (min-width: 800px) {
+
+    .padded-left {
+        padding-left: 2%;
+    }
+
+    .padded-right {
+        padding-right: 2%;
+    }
+}
+
+@media all and (min-width: 1280px) {
+
+    .padded-left {
+        padding-left: 4%;
+    }
+
+    .padded-right {
+        padding-right: 4%;
+    }
 }
